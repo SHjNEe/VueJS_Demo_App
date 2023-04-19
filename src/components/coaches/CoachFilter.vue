@@ -1,13 +1,13 @@
 <template>
   <base-card>
-    <h2>Find your Coach</h2>
+    <h2>Find Your Coach</h2>
     <span class="filter-option">
-      <input type="checkbox" id="frontEnd" checked @change="setFilter" />
-      <label for="frontEnd">Front End</label>
+      <input type="checkbox" id="frontend" checked @change="setFilter" />
+      <label for="frontend">Frontend</label>
     </span>
     <span class="filter-option">
-      <input type="checkbox" id="backEnd" checked @change="setFilter" />
-      <label for="backEnd">Back End</label>
+      <input type="checkbox" id="backend" checked @change="setFilter" />
+      <label for="backend">Backend</label>
     </span>
     <span class="filter-option">
       <input type="checkbox" id="career" checked @change="setFilter" />
@@ -18,14 +18,14 @@
 
 <script>
 export default {
-  emits: ["change-filter"],
+  emits: ['change-filter'],
   data() {
     return {
       filters: {
         frontend: true,
         backend: true,
-        career: true,
-      },
+        career: true
+      }
     };
   },
   methods: {
@@ -34,13 +34,13 @@ export default {
       const isActive = event.target.checked;
       const updatedFilters = {
         ...this.filters,
-        [inputId]: isActive,
+        [inputId]: isActive
       };
       this.filters = updatedFilters;
-      this.$emit("change-filter", this.filters);
-    },
-  },
-};
+      this.$emit('change-filter', updatedFilters);
+    }
+  }
+}
 </script>
 
 <style scoped>

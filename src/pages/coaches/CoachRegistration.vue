@@ -1,27 +1,24 @@
 <template>
   <section>
     <base-card>
-      <h2>Register as a coach!</h2>
-      <coach-registration @save-data="saveData"></coach-registration>
+      <h2>Register as a coach now!</h2>
+      <coach-form @save-data="saveData"></coach-form>
     </base-card>
   </section>
 </template>
+
 <script>
-import CoachRegistration from "../../components/coaches/CoachForm.vue";
+import CoachForm from '../../components/coaches/CoachForm.vue';
+
 export default {
   components: {
-    CoachRegistration,
-  },
-  computed: {
-    isCoach() {
-      return this.$store.getters["coaches/isCoach"];
-    },
+    CoachForm,
   },
   methods: {
-    saveData(coachData) {
-      this.$store.dispatch("coaches/registerCoach", coachData);
-      this.$router.replace("/coaches");
-    },
-  },
+    saveData(data) {
+      this.$store.dispatch('coaches/registerCoach', data);
+      this.$router.replace('/coaches');
+    }
+  }
 };
 </script>

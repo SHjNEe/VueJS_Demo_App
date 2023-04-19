@@ -10,8 +10,9 @@
       <base-card>
         <header>
           <h2>Interested? Reach out now!</h2>
-          <base-button link :to="contactLink">Details</base-button>
+          <base-button link :to="contactLink">Contact</base-button>
         </header>
+        <router-view></router-view>
       </base-card>
     </section>
     <section>
@@ -36,14 +37,12 @@ export default {
       selectedCoach: null,
     };
   },
-  created() {
-    this.selectedCoach = this.$store.getters["coaches/coaches"].find(
-      (coach) => coach.id === this.id
-    );
-  },
   computed: {
     fullName() {
       return this.selectedCoach.firstName + " " + this.selectedCoach.lastName;
+    },
+    areas() {
+      return this.selectedCoach.areas;
     },
     rate() {
       return this.selectedCoach.hourlyRate;
@@ -51,12 +50,14 @@ export default {
     description() {
       return this.selectedCoach.description;
     },
-    areas() {
-      return this.selectedCoach.areas;
-    },
     contactLink() {
-      return `/coaches/${this.id}/contact`;
+      return this.$route.path + "/" + this.id + "/contact";
     },
+  },
+  created() {
+    this.selectedCoach = this.$store.getters["coaches/coaches"].find(
+      (coach) => coach.id === this.id
+    );
   },
 };
 </script>
