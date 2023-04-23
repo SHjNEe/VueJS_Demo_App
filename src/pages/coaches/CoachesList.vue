@@ -6,10 +6,13 @@
     <section>
       <base-card>
         <div class="controls">
-          <base-button mode="outline">Refresh</base-button>
+          <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
           <base-button v-if="!isCoach" link to="/register"
             >Register as Coach</base-button
           >
+        </div>
+        <div v-if="isLoading">
+          <base-spinner></base-spinner>
         </div>
         <ul v-if="hasCoaches">
           <coach-item
@@ -44,7 +47,11 @@ export default {
         backend: true,
         career: true,
       },
+      isLoading: false,
     };
+  },
+  created() {
+    this.loadCoaches();
   },
   computed: {
     isCoach() {
@@ -66,12 +73,17 @@ export default {
       });
     },
     hasCoaches() {
-      return this.$store.getters["coaches/hasCoaches"];
+      return !this.isLoading && this.$store.getters["coaches/hasCoaches"];
     },
   },
   methods: {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
+    },
+    async loadCoaches() {
+      this.isLoading = true;
+      await this.$store.dispatch("coaches/loadCoaches");
+      this.isLoading = false;
     },
   },
 };
