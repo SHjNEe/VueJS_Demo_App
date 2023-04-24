@@ -6,16 +6,18 @@
     <p>{{ message }}</p>
   </li>
 </template>
+
 <script>
 export default {
-  props: ["message", "email"],
+  props: ['email', 'message'],
   computed: {
     emailLink() {
-      return "mailto:" + this.email;
-    },
-  },
-};
+      return 'mailto:' + this.email;
+    }
+  }
+}
 </script>
+
 <style scoped>
 li {
   margin: 1rem 0;

@@ -17,27 +17,33 @@ export default {
       }
     );
 
-    // const reponseData = await response.json();
+    // const responseData = await response.json();
 
     if (!response.ok) {
-      //Errro...
+      // error ...
     }
+
     context.commit("registerCoach", {
       ...coachData,
       id: userId,
     });
   },
-  async loadCoaches(context, payload) {
+  async loadCoaches(context) {
     const response = await fetch(
       `https://vuejs-max-83afd-default-rtdb.asia-southeast1.firebasedatabase.app/coaches.json`
     );
     const responseData = await response.json();
+
     if (!response.ok) {
-      //Errro...
+      const error = new Error(responseData.message || "Failed to fetch!");
+      throw error;
     }
+
     const coaches = [];
+
     for (const key in responseData) {
       const coach = {
+        id: key,
         firstName: responseData[key].firstName,
         lastName: responseData[key].lastName,
         description: responseData[key].description,
@@ -46,6 +52,7 @@ export default {
       };
       coaches.push(coach);
     }
+
     context.commit("setCoaches", coaches);
   },
 };
