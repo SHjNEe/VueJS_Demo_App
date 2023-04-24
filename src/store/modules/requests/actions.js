@@ -27,9 +27,10 @@ export default {
     context.commit("addRequest", newRequest);
   },
   async fetchRequests(context) {
-    const coachId = context.rootGetters.userId;
+    const coachId = context.rootGetters["auth/userId"];
+    const token = context.rootGetters["auth/token"];
     const response = await fetch(
-      `https://vuejs-max-83afd-default-rtdb.asia-southeast1.firebasedatabase.app/requests/${coachId}.json`
+      `https://vuejs-max-83afd-default-rtdb.asia-southeast1.firebasedatabase.app/requests/${coachId}.json?auth=${token}`
     );
     const responseData = await response.json();
 

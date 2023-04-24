@@ -1,6 +1,6 @@
 export default {
   async registerCoach(context, data) {
-    const userId = context.rootGetters.userId;
+    const userId = context.rootGetters["auth/userId"];
     const coachData = {
       firstName: data.first,
       lastName: data.last,
@@ -8,9 +8,9 @@ export default {
       hourlyRate: data.rate,
       areas: data.areas,
     };
-
+    const token = context.rootGetters["auth/token"];
     const response = await fetch(
-      `https://vuejs-max-83afd-default-rtdb.asia-southeast1.firebasedatabase.app/coaches/${userId}.json`,
+      `https://vuejs-max-83afd-default-rtdb.asia-southeast1.firebasedatabase.app/coaches/${userId}.json?auth=${token}`,
       {
         method: "PUT",
         body: JSON.stringify(coachData),
@@ -32,8 +32,10 @@ export default {
     if (!payload.forceRefresh && !context.getters.shouldUpdate) {
       return;
     }
+    const token = context.rootGetters["auth/token"];
+
     const response = await fetch(
-      `https://vuejs-max-83afd-default-rtdb.asia-southeast1.firebasedatabase.app/coaches.json`
+      `https://vuejs-max-83afd-default-rtdb.asia-southeast1.firebasedatabase.app/coaches.json?auth=${token}`
     );
     const responseData = await response.json();
 
