@@ -78,6 +78,8 @@ export default {
           email: this.email,
           password: this.password,
         };
+        const redirectUrl = "/" + (this.$route.query.redirect || "coaches");
+        this.$router.replace(redirectUrl);
         if (this.mode === "login") {
           await this.$store.dispatch("auth/login", actionPayload);
         } else {
